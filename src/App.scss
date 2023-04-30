@@ -1,0 +1,368 @@
+$main-value: 4px;
+$style-light-background: rgb(235, 235, 235);
+$style-checker-light-background: #3277b0;
+$style-black-background: #1c202c;
+$sun-background: #f1c528;
+$moon-background: #c2c9d3;
+$moon-inside-shadow: #1c202c;
+$moon-inside-background: #939eb2;
+$clouds-back-backgroung: #a3c5e1;
+$clouds-front-backgroung: #f1fbfd;
+$color-black50: rgba(0, 0, 0, 0.5);
+$color-black30: rgba(0, 0, 0, 0.3);
+$color-white50: rgba(255, 255, 255, 0.50);
+$color-white20: rgba(255, 255, 255, 0.20);
+$color-white05: rgba(255, 255, 255, 0.05);
+
+@mixin widthHeight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin positionAbsolute($top, $right, $bottom, $left) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin beforeAfterComponent($content, $time) {
+  content: $content;
+  display: block;
+  box-sizing: border-box;
+  border-radius: 50%;
+  transition: $time;
+}
+
+.App {
+  display: flex;
+  min-height: 100vh;
+  min-width: 100vw;
+  @include widthHeight(100%, 100%);
+  background-color: $style-light-background;
+}
+
+.style-changer {
+  &__filter {
+    @include widthHeight(0, 100vh);
+    @include positionAbsolute(0, auto, auto, 0);
+    background-color: $style-black-background;
+    transition: 1s;
+    z-index: 0;
+
+    &.full {
+      @include widthHeight(100vw, 100vh);
+    }
+  }
+
+  &__wrapper {
+    @include widthHeight(fit-content, fit-content);
+    margin: $main-value*2.5;
+    position: relative;
+    border-radius: $main-value*10;
+    box-shadow: 0 $main-value*.25 $main-value*.25 $color-white50;
+    overflow: hidden;
+    transition: .5s;
+    z-index: 1;
+
+    &.light {
+      background-color: $style-checker-light-background;
+    }
+
+    &.dark {
+      background-color: $style-black-background;
+    }
+
+    .checker-label {
+      @include widthHeight($main-value*25, $main-value*10);
+      box-sizing: border-box;
+      border-radius: $main-value*10;
+      box-shadow: 0 0 $main-value*2 $color-black50 inset;
+      display: flex;
+      padding: $main-value;
+      position: relative;
+      transition: 1s;
+      z-index: 99;
+
+      &::before {
+        @include beforeAfterComponent('', .5s);
+        @include widthHeight($main-value*20, $main-value*20);
+        @include positionAbsolute(-$main-value*4.5, auto, auto, -$main-value*7.5);
+        background-color: $color-white20;
+        box-shadow: $main-value*2.5 0 0 $main-value $color-white05,
+          $main-value*5.5 0 0 $main-value $color-white05;
+      }
+
+      &::after {
+        @include beforeAfterComponent('', 1s);
+        @include widthHeight($main-value*8, $main-value*8);
+        @include positionAbsolute(auto, auto, auto, -$main-value*3);
+        background-color: $sun-background;
+        box-shadow: 0px $main-value*-.5 $main-value*.5 $color-black30 inset,
+          $main-value*.5 $main-value*.5 $main-value $color-black50,
+          $main-value*.25 $main-value*.25 $main-value*.25 $color-white50 inset;
+        transform: translateX(50%);
+      }
+
+      &__internal {
+        @include widthHeight(0, 0);
+        @include positionAbsolute($main-value*2, 0, 0, $main-value*10);
+        border-radius: 50%;
+        box-sizing: border-box;
+        box-shadow: 0 0 $main-value*.25 $moon-inside-background;
+        background-color: $moon-inside-background;
+        z-index: 99;
+
+        &::after,
+        &::before {
+          @include beforeAfterComponent('', .5s);
+          @extend .checker-label__internal;
+        }
+      }
+    }
+
+    .clouds-stars {
+      @include positionAbsolute(0, auto, auto, 0);
+      @include widthHeight(100%, 100%);
+
+      &__item {
+        border-radius: 50%;
+        transition: .5s;
+
+        &::before,
+        &::after {
+          @include beforeAfterComponent('', .5s)
+        }
+
+        &:nth-child(1) {
+          @include widthHeight($main-value*5, $main-value*5);
+          @include positionAbsolute(auto, auto, -$main-value*2, 0);
+          background-color: $clouds-back-backgroung;
+
+          &::before {
+            @include widthHeight($main-value*8, $main-value*8);
+            @include positionAbsolute(auto, auto, -$main-value*3, $main-value*4);
+            background-color: $clouds-back-backgroung;
+          }
+
+          &::after {
+            @include widthHeight($main-value*7, $main-value*7);
+            @include positionAbsolute(auto, auto, -$main-value*2.5, $main-value*7);
+            background-color: $clouds-back-backgroung;
+          }
+
+
+        }
+
+        &:nth-child(2) {
+          @include widthHeight($main-value*5, $main-value*5);
+          @include positionAbsolute(auto, auto, -$main-value*3, $main-value*11);
+          background-color: $clouds-back-backgroung;
+
+          &::before {
+            @include widthHeight($main-value*5, $main-value*5);
+            @include positionAbsolute(auto, auto, $main-value*.75, $main-value*2);
+            background-color: $clouds-back-backgroung;
+          }
+
+          &::after {
+            @include widthHeight($main-value*7, $main-value*7);
+            @include positionAbsolute(auto, auto, $main-value*0, $main-value*4);
+            background-color: $clouds-back-backgroung;
+          }
+        }
+
+        &:nth-child(3) {
+          @include widthHeight($main-value*4, $main-value*4);
+          @include positionAbsolute(auto, auto, $main-value*1, $main-value*18);
+          background-color: $clouds-back-backgroung;
+
+          &::before {
+            @include widthHeight($main-value*9, $main-value*9);
+            @include positionAbsolute(auto, auto, -$main-value*2, $main-value*2);
+            background-color: $clouds-back-backgroung;
+          }
+
+          &::after {
+            @include widthHeight($main-value*7, $main-value*7);
+            @include positionAbsolute(auto, auto, $main-value*3, $main-value*3.5);
+            background-color: $clouds-back-backgroung;
+          }
+        }
+
+        &:nth-child(4) {
+          @include widthHeight($main-value*4, $main-value*4);
+          @include positionAbsolute(auto, auto, -$main-value*2, $main-value*1);
+          background-color: $clouds-front-backgroung;
+
+          &::before {
+            @include widthHeight($main-value*8, $main-value*8);
+            @include positionAbsolute(auto, auto, -$main-value*4, $main-value*2);
+            background-color: $clouds-front-backgroung;
+          }
+
+          &::after {
+            @include widthHeight($main-value*9, $main-value*9);
+            @include positionAbsolute(auto, auto, -$main-value*5.5, $main-value*6);
+            background-color: $clouds-front-backgroung;
+          }
+        }
+
+        &:nth-child(5) {
+          @include widthHeight($main-value*7, $main-value*7);
+          @include positionAbsolute(auto, auto, -$main-value*5, $main-value*12);
+          background-color: $clouds-front-backgroung;
+
+          &::before {
+            @include widthHeight($main-value*10, $main-value*10);
+            @include positionAbsolute(auto, auto, -$main-value*1.5, $main-value*4);
+            background-color: $clouds-front-backgroung;
+          }
+
+          &::after {
+            @include widthHeight($main-value*12, $main-value*12);
+            @include positionAbsolute(auto, auto, $main-value*1.5, $main-value*10);
+            background-color: $clouds-front-backgroung;
+          }
+        }
+      }
+    }
+
+    #checker {
+      display: none;
+
+      &:checked {
+        & + .checker-label {
+          position: relative;
+
+          &::before {
+            @include beforeAfterComponent('', .5s);
+            @include widthHeight($main-value*15, $main-value*15);
+            @include positionAbsolute(-$main-value*2.5, -$main-value*3.5, auto, auto);
+            background-color: $color-white20;
+            box-shadow: -$main-value*2 0 0 $main-value $color-white05,
+              -$main-value*5 0 0 $main-value $color-white05;
+          }
+
+          &::after {
+            content: '';
+            @include positionAbsolute(auto, auto, auto, $main-value*12);
+            background-color: $moon-background;
+          }
+
+          &> div {
+            @include positionAbsolute($main-value*4, auto, auto, $main-value*17);
+            @include widthHeight($main-value*2.5, $main-value*2.5);
+            transition: 1s;
+
+            &::after {
+              @include positionAbsolute($main-value*1.5, auto, auto, $main-value*3.5);
+              @include widthHeight($main-value*2, $main-value*2);
+            }
+
+            &::before {
+              @include positionAbsolute(-$main-value*2, auto, auto, $main-value*3);
+              @include widthHeight($main-value*1.5, $main-value*1.5);
+            }
+          }
+        }
+
+        & ~ .clouds-stars .clouds-stars__item {
+          &::before,
+          &::after {
+            @include beforeAfterComponent("\2726", .5);
+            color: $clouds-front-backgroung;
+            background: none;
+          }
+
+          &:nth-child(1) {
+            @include widthHeight($main-value, $main-value);
+            @include positionAbsolute(auto, auto, -$main-value, 0);
+            font-size: $main-value*2;
+
+            &::before {
+              @include widthHeight($main-value*2, $main-value*2);
+              @include positionAbsolute(auto, auto, $main-value*8, $main-value*4);
+            }
+            &::after {
+              @include widthHeight($main-value*2, $main-value*2);
+              @include positionAbsolute(auto, auto, $main-value*3, $main-value*12);
+            }
+          }
+
+          &:nth-child(2) {
+            @include widthHeight($main-value, $main-value);
+            @include positionAbsolute(auto, auto, -$main-value, 0);
+            font-size: $main-value*1.5;
+
+            &::before {
+              @include widthHeight($main-value, $main-value);
+              @include positionAbsolute(auto, auto, $main-value*6, $main-value*6);
+            }
+            &::after {
+              @include widthHeight($main-value, $main-value);
+              @include positionAbsolute(auto, auto, $main-value*9, $main-value*14);
+            }
+          }
+          &:nth-child(3) {
+            @include widthHeight($main-value, $main-value);
+            @include positionAbsolute(auto, auto, -$main-value, 0);
+            font-size: $main-value;
+
+            &::before {
+              @include widthHeight($main-value, $main-value);
+              @include positionAbsolute(auto, auto, $main-value*4, $main-value*2);
+            }
+            &::after {
+              @include widthHeight($main-value, $main-value);
+              @include positionAbsolute(auto, auto, $main-value*2, $main-value*6);
+            }
+          }
+          &:nth-child(3) {
+            @include widthHeight($main-value, $main-value);
+            @include positionAbsolute(auto, auto, -$main-value, 0);
+            font-size: $main-value;
+
+            &::before {
+              @include widthHeight($main-value*1, $main-value*1);
+              @include positionAbsolute(auto, auto, $main-value*4, $main-value*2);
+            }
+            &::after {
+              @include widthHeight($main-value*1, $main-value*1);
+              @include positionAbsolute(auto, auto, $main-value*2, $main-value*6);
+            }
+          }
+          &:nth-child(4) {
+            @include widthHeight($main-value, $main-value);
+            @include positionAbsolute(auto, auto, -$main-value, 0);
+            font-size: $main-value*1.5;
+
+            &::before {
+              @include widthHeight($main-value*1.5, $main-value*1.5);
+              @include positionAbsolute(auto, auto, $main-value*6, $main-value*10);
+            }
+            &::after {
+              @include widthHeight($main-value*1.5, $main-value*1.5);
+              @include positionAbsolute(auto, auto, $main-value*9, $main-value*9);
+            }
+          }
+          &:nth-child(5) {
+            @include widthHeight($main-value, $main-value);
+            @include positionAbsolute(auto, auto, -$main-value, 0);
+            font-size: $main-value;
+
+            &::before {
+              @include widthHeight($main-value, $main-value);
+              @include positionAbsolute(auto, auto, $main-value*4, $main-value*9);
+            }
+            &::after {
+              @include widthHeight($main-value, $main-value);
+              @include positionAbsolute(auto, auto, $main-value*10, $main-value*12);
+            }
+          }
+        }
+      }
+    }
+  }
+}

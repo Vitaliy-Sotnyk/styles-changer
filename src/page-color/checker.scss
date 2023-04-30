@@ -1,0 +1,403 @@
+.App-checker {
+    display: flex;
+    min-height: 100vh;
+    min-width: 100vw;
+    width: 100%;
+    height: 100%; 
+    background-color: lightgray;
+}
+.color-filter{
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    background-color: #1c202c;
+    transition: 1s;
+
+    &.light{
+        width: 0vh;
+    }
+    &.dark{
+        width: 100vw;
+    }
+}
+.wrapper {
+    width: fit-content;
+    height: fit-content;
+    margin: 15px;
+    position: relative;
+    border-radius: 50px;
+    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    transition: .5s;
+    z-index: 1;
+
+    &.light{
+        background-color: #3277b0;
+    }
+    &.dark{
+        background-color: #1c202c;
+    }
+
+    #checker {
+        display: none;
+    }
+
+    .checker-div {
+        box-sizing: border-box;
+        border-radius: 50px;
+        box-shadow: 0 0 7px rgba(0, 0, 0, .5) inset;
+        display: flex;
+        padding: 5px;
+        height: 50px;
+        width: 125px;
+        position: relative;
+        transition: 1s;
+        z-index: 99;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            display: block;
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            left: -10px;
+            top: -15px;
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 10px 0 0 5px rgba(255, 255, 255, 0.15),
+            23px 0 0 5px rgba(255, 255, 255, 0.05);
+            transition: .5s;
+        }
+        &::after {
+            content: '';
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            height: 40px;
+            width: 40px;
+            left: -15px;
+            background-color: #f1c528;
+            border-radius: 50%;
+            transition: 1s;
+            transform: translateX(50%);
+
+            box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.4) inset,
+                2px 3px 5px rgba(0, 0, 0, 0.4),
+                1px 1px 1px rgba(255, 255, 255, 0.8) inset;
+        }
+
+        & > div{
+            position: absolute;
+            border-radius: 50%;
+            width: 0px;
+            height: 0px;
+            box-sizing: border-box;
+            box-shadow: 0 0 1px #1c202c;
+            background-color: #939eb2;
+            top: 20px;
+            left: 15px;
+            z-index: 99;
+
+            &::after{
+                content: '';
+                display: block;
+                position: absolute;
+                border-radius: 50%;
+                width: 0px;
+                height: 0px;
+                box-sizing: border-box;
+                box-shadow: 0 0 1px #1c202c;
+                background-color: #939eb2;
+                top: 8px;
+                left: 18px;
+                z-index: 99;
+            }
+            
+            &::before{
+                content: '';
+                display: block;
+                position: absolute;
+                border-radius: 50%;
+                width: 0px;
+                height: 0px;
+                box-sizing: border-box;
+                box-shadow: 0 0 1px #1c202c;
+                background-color: #939eb2;
+                top: -9px;
+                left: 10px;
+                z-index: 99;
+            }
+        }
+    }
+
+    #checker:checked+.checker-div {
+        position: relative;
+        &::after {
+            content: '';
+            left: 60px;
+            background-color: #c2c9d3;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            display: block;
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            left: 50px;
+            top: -15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: -10px 0 0 5px rgba(255, 255, 255, 0.07),
+            -23px 0 0 5px rgba(255, 255, 255, 0.05);
+        }
+
+        & > div{
+            width: 12px;
+            height: 12px;
+            top: 20px;
+            left: 88px;
+            transition: 1s;
+
+            &::after{
+                width: 8px;
+                height: 8px;
+                transition: 1s;
+            }
+            
+            &::before{
+                width: 6px;
+                height: 6px;
+                transition: 1s;
+            }
+        }
+    }
+
+    .clouds {
+        position: relative;
+        height: 100%;
+        width: 100%;
+
+        &>* {
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(50%, 50%);
+            transition: .5s;
+
+            &::after{
+                content: '';
+                border-radius: 50%;
+                position: absolute;
+            }
+        }
+        &>div:nth-child(1), &>div:nth-child(2), &>div:nth-child(3), &>div:nth-child(4){
+            background-color: #a3c5e1;
+            &::after{
+                background-color: #a3c5e1;
+            }
+        }
+        &>div:nth-child(5), &>div:nth-child(6), &>div:nth-child(7){
+            background-color: #f1fbfd;
+            &::after{
+                background-color: #f1fbfd;
+            }
+        }
+
+        &-1 {
+            height: 20px;
+            width: 20px;
+            bottom: 3px;
+            left: -3px;
+
+            &::after {
+                height: 40px;
+                width: 40px;
+                bottom: -16px;
+                left: 17px;
+            }
+        }
+        &-2 {
+            height: 30px;
+            width: 30px;
+            bottom: 8px;
+            left: 27px;
+
+            &::after {
+                height: 20px;
+                width: 20px;
+                bottom: 7px;
+                left: 20px;
+            }
+        }
+        &-3 {
+            height: 37px;
+            width: 37px;
+            bottom: 10px;
+            left: 52px;
+
+            &::after {
+                height: 32px;
+                width: 32px;
+                bottom: 8px;
+                left: 18px;
+            }
+        }
+        &-4{
+            height: 50px;
+            width: 50px;
+            bottom: 30px;
+            left: 80px;
+
+            &::after{
+                height: 40px;
+                width: 40px;
+                bottom: -2px;
+                left: 5px;
+                background-color: #f1fbfd !important;
+            }
+        }
+        &-5{
+            height: 32px;
+            width: 32px;
+            bottom: 8px;
+            left: 85px;
+
+            &::after{
+                height: 30px;
+                width: 30px;
+                bottom: -7px;
+                left: -20px;
+            }
+        }
+        &-6{
+            height: 25px;
+            width: 25px;
+            bottom: -3px;
+            left: 55px;
+
+            &::after{
+                height: 30px;
+                width: 30px;
+                bottom: -2px;
+                left: -19px;
+            }
+
+        }
+        &-7{
+            height: 40px;
+            width: 40px;
+            bottom: -9px;
+            left: 0px;
+            &::after{
+                height: 30px;
+                width: 30px;
+                bottom: 8px;
+                left: -15px;
+            }
+        }
+    }
+
+    #checker:checked ~ .clouds{
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+
+        & > * {
+            position: absolute;
+            bottom: -10px;
+            height: 2px;
+            width: 2px;
+            border-radius: 50%;
+
+            &::after{
+                content: '\2726';
+                height: fit-content;
+                width: fit-content;
+                background: none;
+                font-size: 7px;
+                color: white;
+                position: absolute;
+            }
+            &::before{
+                content: '\2726';
+                height: fit-content;
+                width: fit-content;
+                background: none;
+                font-size: 3px;
+                color: white;
+                position: absolute;
+            }
+        }
+        .clouds-1 {
+            &::before {
+                bottom: 25px;
+                left: 15px;
+            }
+            &::after {
+                font-size: 4px;
+                bottom: 35px;
+                left: 17px;
+            }
+        }
+        .clouds-2 {
+            &::before {
+                bottom: 55px;
+                left: -5px;
+            }
+            &::after {
+                font-size: 5px;
+                bottom: 45px;
+                left: 47px;
+            }
+        }
+        .clouds-3 {
+            &::before {
+                bottom: 45px;
+                left: 15px;
+            }
+            &::after {
+                font-size: 5px;
+                bottom: 15px;
+                left: 7px;
+            }
+        }
+        .clouds-4{
+            &::before {
+                bottom: 20px;
+                left: -50px;
+            }
+            &::after {
+                font-size: 5px;
+                bottom: 25px;
+                left: -40px;
+                background: none !important;
+            }
+        }
+        .clouds-5{
+            &::before {
+                bottom: 40px;
+                left: -50px;
+            }
+            &::after {
+                bottom: 35px;
+                left: -30px;
+            }
+        }
+        .clouds-6{
+            &::before {
+                bottom: 40px;
+                left: -50px;
+            }
+        }
+        .clouds-7{
+            &::before {
+                bottom: 50px;
+                left: 45px;
+            }
+        }
+      
+    }
+}
